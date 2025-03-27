@@ -60,7 +60,9 @@ agent = initialize_agent(
 )
 
 # Example queries
-response1 = agent.invoke({"input": "When was the first moon landing?"})
+#response1 = agent.invoke({"input": "When did Neil Armstrong land on the moon?"})
+#response1 = agent.invoke({"input": "Which company makes 747 aircraft?"})
+response1 = agent.invoke({"input": "How many planets are there?"})
 print("Response 1: ", response1)
 
 # Debug parsing issue by returning intermediate steps
