@@ -10,13 +10,14 @@ from langchain.schema import HumanMessage, AIMessage   # To differentiate betwee
 memory = ConversationBufferMemory(return_messages=True)
 
 def clear_question():
-    print(type(memory))    
-    print(memory)
-    for msg in memory.chat_memory.messages:
-        if isinstance(msg, HumanMessage):
-            print(f"🧍 User: {msg.content}")
-        elif isinstance(msg, AIMessage):
-            print(f"🤖 AI: {msg.content}")
+    pass
+    # print(type(memory))    
+    # print(memory)
+    # for msg in memory.chat_memory.messages:
+    #     if isinstance(msg, HumanMessage):
+    #         print(f"🧍 User: {msg.content}")
+    #     elif isinstance(msg, AIMessage):
+    #         print(f"🤖 AI: {msg.content}")
 
 # --- Streaming Chat Function Using LangChain Memory ---
 def stream_with_memory(user_input, model="llama3.1"):
@@ -78,7 +79,7 @@ with gr.Blocks() as demo:
         )
 
     # Submit button
-    submit_btn = gr.Button("Ask AI")
+    submit_btn = gr.Button("Ask AI", variant="primary")
     clear_btn = gr.Button("Clear question")
 
     # Hook up the submit button to the streaming function
@@ -98,4 +99,4 @@ with gr.Blocks() as demo:
 
 
 # Launch the web app on localhost
-demo.launch()
+demo.launch(share=True)

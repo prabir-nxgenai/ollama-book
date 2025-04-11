@@ -22,9 +22,9 @@ def query_ollama(prompt, model="llama3.1"):
         return result.get("response", "No response received.")
     else:
         return f"Error {response.status_code}: {response.text}"
-
+    
 # Gradio UI
-iface = gr.Interface(
+demo = gr.Interface(
     fn=query_ollama,
     inputs=[
         gr.Textbox(label="Enter your prompt", placeholder="Ask me anything..."),
@@ -32,10 +32,11 @@ iface = gr.Interface(
     ],
     outputs="text",
     title="Ollama LLM Chat",
-    description="Enter a prompt and get responses from the Ollama LLM server."
+    description="Enter a prompt and get responses from the Ollama LLM server.",
+    allow_flagging="never"
 )
 
 # Launch the Gradio app
 if __name__ == "__main__":
-    iface.launch()
+    demo.launch(share=True)
 
