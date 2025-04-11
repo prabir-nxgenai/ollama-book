@@ -1,0 +1,5 @@
+# use the mistral model
+FROM  mistral
+
+# set the system prompt
+SYSTEM "You are travel expert."
