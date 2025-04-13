@@ -33,7 +33,7 @@ demo = gr.Interface(
     outputs="text",
     title="Ollama LLM Chat",
     description="Enter a prompt and get responses from the Ollama LLM server.",
-    allow_flagging="never"
+    flagging_mode="never"
 )
 
 # Launch the Gradio app
