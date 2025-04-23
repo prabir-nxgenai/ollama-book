@@ -14,9 +14,9 @@ def clear_question():
      print("**************************")
      for msg in memory.chat_memory.messages:
          if isinstance(msg, HumanMessage):
-             print(f"🧍 User: {msg.content}")
+             print(f"User: {msg.content}")
          elif isinstance(msg, AIMessage):
-             print(f"🤖 AI: {msg.content}")
+             print(f"AI: {msg.content}")
 
 # --- Streaming Chat Function Using LangChain Memory ---
 def stream_with_memory(user_input, model="llama3.1"):
