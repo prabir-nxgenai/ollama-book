@@ -79,7 +79,7 @@ def ask_question_stream(pdf_file, question):
 demo = gr.Interface(
     fn=ask_question_stream,
     inputs=[
-        gr.File(label="Upload PDF (optional)"),
+        gr.File(label="Upload PDF"),
         gr.Textbox(label="Ask a question")
     ],
     outputs=gr.Textbox(label="Response", lines=10),
