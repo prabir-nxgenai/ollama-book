@@ -1,6 +1,6 @@
 from langchain.tools import Tool
 from langchain.agents import initialize_agent
-from langchain_community.llms import Ollama
+from langchain_ollama import OllamaLLM
 
 # Define a simple function
 def get_time(_):
@@ -11,8 +11,9 @@ def get_time(_):
 time_tool = Tool(name="current_time", func=get_time, description="Returns the current time")
 
 # Initialize an agent
-llm = Ollama(model="llama3.1")
-agent = initialize_agent([time_tool], llm, agent="zero-shot-react-description", handle_parsing_errors=True, verbose=True, max_iterations=3)
+llm = OllamaLLM(model="llama3.1")
+agent = initialize_agent([time_tool], llm, agent="zero-shot-react-description", handle_parsing_errors=True, verbose=True)
+
 
 # Execute a query that triggers the function
 print(agent.invoke("What is the current time?"))
