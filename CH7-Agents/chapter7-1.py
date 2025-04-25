@@ -41,5 +41,5 @@ agent = initialize_agent([time_tool, duck_tool], llm, agent="zero-shot-react-des
 
 # Execute queries that trigger time and search tools by the agent
 print(agent.invoke("Question 1: What is the current time? Provide answer in YYYY-MM-DD HH:MM:SS format"))
-print(agent.invoke("Question 1: What is the closest planet to the sun?"))
+print(agent.invoke("Question 2: What is the closest planet to the sun?"))
 
