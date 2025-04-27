@@ -13,11 +13,10 @@ from langchain.schema import HumanMessage, AIMessage  # To represent user (Human
 memory = ConversationBufferMemory(return_messages=True)
 
 
-# Define a Clear Question Function --------------------------------
+# Define a Clear Question Function 
 def clear_question():
     """
     Placeholder function tied to the 'Clear' button in Gradio UI.
-    (Currently does nothing but can be expanded if needed.)
     """
     pass
     # # (Optional for Debugging) Print the chat history
@@ -28,8 +27,7 @@ def clear_question():
     #         print(f"AI: {msg.content}")
 
 
-# Define the Streaming Chat Function --------------------------------
-
+# Define the Streaming Chat Function
 def stream_with_memory(user_input, model="llama3.1"):
     """
     Handles interaction with Ollama server.
