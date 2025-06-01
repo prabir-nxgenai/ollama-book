@@ -1,11 +1,12 @@
 
 import gradio as gr
-from langchain.vectorstores import Chroma
-from langchain.embeddings import OllamaEmbeddings
-from langchain.document_loaders import TextLoader, PyPDFLoader
+from langchain_community.document_loaders import TextLoader, PyPDFLoader
 from langchain.schema import Document
 import os
 import uuid
+from langchain_chroma import Chroma
+from langchain_ollama import OllamaEmbeddings  # For creating embeddings using the LLaMA model
+
 
 # Setup embedding and ChromaDB
 embedding = OllamaEmbeddings(model="nomic-embed-text")
@@ -31,7 +32,7 @@ def add_text_document(text, metadata):
     for doc in docs:
         doc.metadata = {"source": "manual_text", "tag": metadata, "id": uid}
     db.add_documents(docs)
-    db.persist()
+    #db.persist()
     return f"Text document added with ID: {uid}"
 
 def add_uploaded_files(files, page_start, page_end, metadata):
@@ -49,7 +50,7 @@ def add_uploaded_files(files, page_start, page_end, metadata):
             for doc in docs:
                 doc.metadata = {"source": file.name, "tag": metadata, "id": uid}
             db.add_documents(docs)
-            db.persist()
+            #db.persist()
             messages.append(f"File '{file.name}' added with ID: {uid}")
         except Exception as e:
             messages.append(f"Failed to process {file.name}: {str(e)}")
