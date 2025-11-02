@@ -1,4 +1,4 @@
-# Install Required Packages
+## Install Required Packages
 # Run this manually if needed:
 # pip install requests ollama langchain chromadb gradio langchain-community pymupdf
 

@@ -1,4 +1,4 @@
-# Import the ollama library
+## Import the ollama library
 # This library allows us to interact with a local Ollama server to query language models like Llama 3.1
 import ollama
 

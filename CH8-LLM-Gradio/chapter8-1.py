@@ -1,4 +1,4 @@
-# Import Required Modules
+## Import Required Modules
 import requests  # For sending HTTP POST requests to the Ollama server
 import gradio as gr  # For building the web-based UI (Gradio)
 

@@ -1,4 +1,4 @@
-# Import Required Modules
+## Import Required Modules
 from langchain_core.tools import tool  # To define functions as "tools" that an agent can use
 from langchain_ollama import ChatOllama  # To interact with LLaMA models served by Ollama
 from ddgs import DDGS  # To perform DuckDuckGo search queries

@@ -1,4 +1,4 @@
-# Import necessary libraries
+## Import necessary libraries
 import requests  # For sending HTTP requests to the Ollama server
 
 # Define the URL endpoint where the Ollama server is listening

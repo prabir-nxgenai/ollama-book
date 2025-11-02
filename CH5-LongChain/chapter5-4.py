@@ -1,4 +1,4 @@
-# Import necessary modules from LangChain and LangChain-Ollama
+## Import necessary modules from LangChain and LangChain-Ollama
 from langchain_ollama import OllamaLLM  # Interface for calling a local Ollama LLM server
 from langchain_core.prompts import ChatPromptTemplate  # For defining structured chat-style prompts
 from langchain_core.output_parsers import StrOutputParser  # To parse model outputs as plain strings

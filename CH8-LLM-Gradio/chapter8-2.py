@@ -1,4 +1,4 @@
-# Import Required Libraries
+## Import Required Libraries
 import httpx  # For making asynchronous and streaming HTTP requests to the Ollama server
 import json  # For decoding streaming JSON data (Newline-delimited JSON - NDJSON)
 import gradio as gr  # For building the web user interface (UI)
