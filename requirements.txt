@@ -8,3 +8,4 @@ langchain_text_splitters
 chromadb
 gradio
 pymupdf
+ddgs
