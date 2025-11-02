@@ -1,12 +1,12 @@
 # Import Required Modules
-from langchain.tools import Tool  # To define functions as "tools" that an agent can use
-from langchain.agents import initialize_agent  # To create and configure an LLM agent
-from langchain_community.chat_models import ChatOllama  # To interact with LLaMA models served by Ollama
-from duckduckgo_search import DDGS  # To perform DuckDuckGo search queries
-
+from langchain_core.tools import tool  # To define functions as "tools" that an agent can use
+from langchain_ollama import ChatOllama  # To interact with LLaMA models served by Ollama
+from ddgs import DDGS  # To perform DuckDuckGo search queries
+from langchain.agents import create_agent
 
 # Define a Function to Get the Current Time
-def get_time(_):
+@tool
+def get_time(query: str = "") -> str:
     """
     Returns the current system time formatted as YYYY-MM-DD HH:MM:SS.
     
@@ -21,7 +21,8 @@ def get_time(_):
 
 
 # Define a Function to Perform Internet Search
-def duckduckgo_search(query: str) -> str:
+@tool
+def duckduckgo_search(query: str = "") -> str:
     """
     Performs a DuckDuckGo text search and returns the first relevant snippet.
 
@@ -38,25 +39,13 @@ def duckduckgo_search(query: str) -> str:
                 snippet = result.get("body") or result.get("snippet")  # Try to find a text snippet
                 if snippet:
                     return snippet  # Return the first non-empty snippet
+                
             return "No relevant results found."  # Fallback if no snippets found
     except Exception as e:
         return f"Error during DuckDuckGo search: {str(e)}"  # Return error message if search fails
 
 
-# Register the Functions as Tools
-# Wrap the get_time function into a LangChain Tool
-time_tool = Tool(
-    name="current_time",
-    func=get_time,
-    description="Returns the current time"
-)
-
-# Wrap the duckduckgo_search function into another Tool
-duck_tool = Tool(
-    name="duckduckgo_search",
-    func=duckduckgo_search,
-    description="Searches the Internet. Input should be a search query string."
-)
+TOOLS=[get_time, duckduckgo_search]
 
 
 # Initialize the LLaMA Model via Ollama
@@ -64,26 +53,16 @@ duck_tool = Tool(
 llm = ChatOllama(model="llama3.1", base_url="http://localhost:11434")
 
 
+
 # Initialize the LangChain Agent
-# Create an agent capable of deciding when to use the tools (zero-shot reasoning)
-# - [time_tool, duck_tool] = available tools for the agent
-# - llm = model the agent will use to reason and decide actions
-# - agent = "zero-shot-react-description" strategy (decides tools based on input description)
-# - handle_parsing_errors = True ensures robustness if outputs are malformed
-# - verbose = True for detailed printout of internal decision steps
-agent = initialize_agent(
-    tools=[time_tool, duck_tool],
-    llm=llm,
-    agent="zero-shot-react-description",
-    handle_parsing_errors=True,
-    verbose=True
-)
+agent = create_agent(llm, TOOLS)
 
 
 # Execute Queries Using the Agent
 # Query 1: Ask the agent to fetch the current time
-print(agent.invoke("Question 1: What is the current time? Provide answer in YYYY-MM-DD HH:MM:SS format"))
-
+print(agent.invoke({"messages": [{"role": "user", "content": "What is the current time? Provide answer in YYYY-MM-DD HH:MM:SS format"}]}))
+print ("###############################################")
+print ("###############################################")
 # Query 2: Ask the agent to search the Internet for a fact
-print(agent.invoke("Question 2: What is the closest planet to the sun?"))
+print(agent.invoke({"messages": [{"role": "user", "content": "What is the closest planet to the sun?"}]}))
 
