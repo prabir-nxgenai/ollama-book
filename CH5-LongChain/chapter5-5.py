@@ -1,8 +1,8 @@
 # Import necessary modules
-from langchain.prompts import ChatPromptTemplate  # For creating structured prompt templates
-from langchain.schema.output_parser import StrOutputParser  # To parse model output into plain strings
+from langchain_core.prompts import ChatPromptTemplate  # For creating structured prompt templates
+from langchain_core.output_parsers import StrOutputParser
 from langchain_ollama import OllamaLLM  # Interface to interact with a local Ollama LLM server
-from langchain.schema.runnable import RunnableBranch  # For conditional branching based on model output
+from langchain_core.runnables import RunnableBranch  # For conditional branching based on model output
 
 # Initialize the Model 
 # Create an instance of the LLaMA model

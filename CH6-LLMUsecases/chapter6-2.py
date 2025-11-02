@@ -1,5 +1,5 @@
 # Import Required Modules 
-from langchain.prompts import PromptTemplate  # To create structured prompt templates for the LLM
+from langchain_core.prompts import PromptTemplate  # To create structured prompt templates for the LLM
 from langchain_ollama import OllamaLLM  # Interface to connect to the locally running Ollama LLM server
 
 

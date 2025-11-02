@@ -1,7 +1,7 @@
 # Import necessary classes and functions from LangChain and LangChain-Ollama
 
 from langchain_ollama import OllamaLLM  # Interface to communicate with the Ollama LLM server
-from langchain.prompts import ChatPromptTemplate, PromptTemplate  # Tools for creating text prompt templates
+from langchain_core.prompts import ChatPromptTemplate, PromptTemplate  # Tools for creating text prompt templates
 from langchain_core.output_parsers import StrOutputParser  # Parses model responses into plain strings
 from langchain_core.runnables import RunnablePassthrough, RunnableLambda  # Tools for building LCEL chains
 

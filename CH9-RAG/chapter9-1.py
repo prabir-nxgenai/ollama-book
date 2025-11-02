@@ -8,7 +8,7 @@ import json  # For handling JSON responses
 import re  # For text cleanup (regex to remove unwanted tags)
 import gradio as gr  # For building the web UI
 from langchain_community.document_loaders import PyMuPDFLoader  # To load PDFs into text
-from langchain.text_splitter import RecursiveCharacterTextSplitter  # To split large text into smaller chunks
+from langchain_text_splitters import RecursiveCharacterTextSplitter  # To split large text into smaller chunks
 from langchain_community.vectorstores import Chroma  # Vector store (ChromaDB) for retrieval
 from langchain_ollama import OllamaEmbeddings  # For creating embeddings using the LLaMA model
 

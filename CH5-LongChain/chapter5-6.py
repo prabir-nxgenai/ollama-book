@@ -1,11 +1,10 @@
 # Import Required Modules
 from langchain_community.chat_message_histories import ChatMessageHistory  # To store and retrieve conversation history
-from langchain.memory import ConversationBufferMemory  # A memory class to buffer the conversation context
-
 from langchain_core.prompts import PromptTemplate  # To create structured prompt templates
 from langchain_core.runnables import RunnablePassthrough, RunnableLambda  # For building LCEL (LangChain Expression Language) chains
 from langchain_core.output_parsers import StrOutputParser  # To parse model responses into clean strings
 from langchain_ollama import OllamaLLM  # Interface to interact with the locally running Ollama server
+from langchain_core.messages import HumanMessage, AIMessage  # Message types
 
 
 # Initialize the LLM Model
@@ -16,10 +15,6 @@ llama = OllamaLLM(model="llama3.1", base_url="http://localhost:11434")
 # Set Up Conversation Memory 
 # Initialize a ChatMessageHistory object to keep track of the conversation messages
 chat_history = ChatMessageHistory()
-
-# Initialize a memory buffer that uses ChatMessageHistory
-# - 'return_messages=True' means when retrieving memory, the messages will be structured
-memory = ConversationBufferMemory(chat_memory=chat_history, return_messages=True)
 
 
 # Define Helper Function to Format Chat History 
@@ -35,9 +30,10 @@ def format_chat_history(input_data):
     Returns:
         dict: A dictionary with 'chat_history' and 'input' keys.
     """
-    history = memory.chat_memory.messages  # Retrieve all previous messages
+    # Retrieve all previous messages from chat history
+    history = chat_history.messages
 
-    # Format each message like "Human: message_content" or "AI: message_content"
+    # Format each message like "Human: message_content" or "Ai: message_content"
     formatted_history = "\n".join(
         [f"{msg.type.capitalize()}: {msg.content}" for msg in history]
     )
@@ -66,24 +62,40 @@ chain = (
 
 # Simulate a Conversation
 # Step 1: Ask a question about France
-print(chain.invoke({"input": "What is the capital of France?"}))
-# Save the context (input and output) to memory for future conversation
-memory.save_context(
-    {"input": "What is the capital of France?"},
-    {"output": "The capital of France is Paris."}
-)
+user_input_1 = "What is the capital of France?"
+response_1 = chain.invoke({"input": user_input_1})
+print(response_1)
+
+# Save the conversation to chat history
+chat_history.add_message(HumanMessage(content=user_input_1))
+chat_history.add_message(AIMessage(content=response_1))
+
 
 # Step 2: Ask a question about India
-print(chain.invoke({"input": "Btw, can you also provide the name of the capital of India?"}))
-# Save this conversation turn to memory
-memory.save_context(
-    {"input": "Btw, can you also provide the name of the capital of India?"},
-    {"output": "The capital of India is New Delhi."}
-)
+user_input_2 = "Btw, can you also provide the name of the capital of India?"
+response_2 = chain.invoke({"input": user_input_2})
+print(response_2)
+
+# Save the conversation to chat history
+chat_history.add_message(HumanMessage(content=user_input_2))
+chat_history.add_message(AIMessage(content=response_2))
+
 
 # Step 3: Request to show the last two answers line by line
-print(chain.invoke({"input": "Show the last two answers in a new line."}))
+user_input_3 = "Show the last two answers in a new line."
+response_3 = chain.invoke({"input": user_input_3})
+print(response_3)
+
+# Save the conversation to chat history
+chat_history.add_message(HumanMessage(content=user_input_3))
+chat_history.add_message(AIMessage(content=response_3))
+
 
 # Step 4: Request to repeat the answers but in all capital letters
-print(chain.invoke({"input": "Please provide the answers again in CAPS."}))
+user_input_4 = "Please provide the answers again in CAPS."
+response_4 = chain.invoke({"input": user_input_4})
+print(response_4)
 
+# Save the conversation to chat history
+chat_history.add_message(HumanMessage(content=user_input_4))
+chat_history.add_message(AIMessage(content=response_4))

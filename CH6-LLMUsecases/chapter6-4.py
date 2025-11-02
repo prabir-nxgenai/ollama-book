@@ -1,8 +1,8 @@
 # Import Required Modules
-from langchain.prompts import PromptTemplate  # For creating structured prompt templates
-from langchain.schema.runnable import RunnableLambda  # For creating simple runnable transformations (not used directly here)
+from langchain_core.prompts import PromptTemplate  # For creating structured prompt templates
+from langchain_core.runnables import RunnableLambda  # For creating simple runnable transformations (not used directly here)
 from langchain_ollama import ChatOllama  # To interact with a local Ollama server for LLaMA chat-based models
-from langchain.schema.runnable import RunnableSequence  # For chaining components together into a runnable sequence
+from langchain_core.runnables import RunnableSequence  # For chaining components together into a runnable sequence
 
 
 # Initialize the Ollama LLaMA Model 

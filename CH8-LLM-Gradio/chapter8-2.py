@@ -2,15 +2,17 @@
 import httpx  # For making asynchronous and streaming HTTP requests to the Ollama server
 import json  # For decoding streaming JSON data (Newline-delimited JSON - NDJSON)
 import gradio as gr  # For building the web user interface (UI)
-from langchain.memory import ConversationBufferMemory  # To store conversation history during the chat
-from langchain.schema import HumanMessage, AIMessage  # To represent user (Human) and AI (Assistant) messages
+
+# Import Required Modules from LangChain
+from langchain_community.chat_message_histories import ChatMessageHistory  # To store and retrieve conversation history
+from langchain_core.messages import HumanMessage, AIMessage  # Message types
 
 
 # Set Up LangChain Memory
-# Initialize conversation memory
+# Initialize conversation message history
 # - Stores all the exchanged messages (user and AI) to maintain context
 # - Messages are stored as structured objects (HumanMessage, AIMessage)
-memory = ConversationBufferMemory(return_messages=True)
+chat_history = ChatMessageHistory()
 
 
 # Define a Clear Question Function 
@@ -20,7 +22,7 @@ def clear_question():
     """
     pass
     # # (Optional for Debugging) Print the chat history
-    # for msg in memory.chat_memory.messages:
+    # for msg in chat_history.messages:
     #     if isinstance(msg, HumanMessage):
     #         print(f"User: {msg.content}")
     #     elif isinstance(msg, AIMessage):
@@ -35,13 +37,13 @@ def stream_with_memory(user_input, model="llama3.1"):
     - Receives and streams the model's response token-by-token
     - Updates memory after AI response
     """
-    # Add the new user input to memory
-    memory.chat_memory.add_user_message(user_input)
+    # Add the new user input to chat history
+    chat_history.add_user_message(user_input)
 
     # Reconstruct conversation history (User: ... Assistant: ...) for context
-    chat_history = memory.chat_memory.messages
+    messages = chat_history.messages
     history_text = ""
-    for msg in chat_history:
+    for msg in messages:
         role = "User" if isinstance(msg, HumanMessage) else "Assistant"
         history_text += f"{role}: {msg.content}\n"
 
@@ -68,8 +70,8 @@ def stream_with_memory(user_input, model="llama3.1"):
                 output += token  # Append the token to the running output
                 yield output  # Yield (stream) the partial output to Gradio
 
-    # After streaming is complete, save the assistant's full response into memory
-    memory.chat_memory.add_ai_message(output)
+    # After streaming is complete, save the assistant's full response into chat history
+    chat_history.add_ai_message(output)
 
 
 # Build the Gradio Web Interface
@@ -115,4 +117,3 @@ with gr.Blocks() as demo:
 # Start the Gradio app if the script is run directly
 if __name__ == "__main__":
     demo.launch(share=True)  # 'share=True' creates a publicly accessible URL (optional)
-
