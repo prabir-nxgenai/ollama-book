@@ -1,2 +1,4 @@
 .venv/
+CH9-RAG/chroma_db/
+CH9-RAG/.gradio/
 
