@@ -8,6 +8,7 @@ from langchain_core.runnables import RunnableBranch  # For conditional branching
 # Create an instance of the LLaMA model
 # - 'model' specifies the model version (Llama 3.1)
 # - 'base_url' points to your locally running Ollama server
+#llama = OllamaLLM(model="llama3.1:70b", base_url="http://localhost:11434")
 llama = OllamaLLM(model="llama3.1", base_url="http://localhost:11434")
 
 
